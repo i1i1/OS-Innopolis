@@ -1,0 +1,11 @@
+    1  cd Courses/OS/week1
+    2  ll
+    3  ./ex2.sh
+    4  ll
+    5  history > ex2.txt
+    6  vim ex2.txt
+    7  echo 123
+    8  a=3
+    9  while [ $a < 100 ]\ndo\necho $a\na=$((a+1))\ndone
+   10  while [ $a -l 100 ]\ndo\necho $a\na=$((a+1))\ndone
+   11  while [ $a -lt 100 ]\ndo\necho $a\na=$((a+1))\ndone
