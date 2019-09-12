@@ -44,10 +44,10 @@ cmd_scan()
     }
 
     do {
-        vector_push(&cmd->cmd, (char)c);
+        vector_push(cmd->cmd, (char)c);
     } while ((c = getchar()) != EOF && !isspace(c));
 
-    vector_push(&cmd->cmd, '\0');
+    vector_push(cmd->cmd, '\0');
 
     if (c == EOF) {
         eof = 1;
@@ -72,7 +72,7 @@ cmd_scan()
             return cmd;
 
         do {
-            vector_push(&arg, (char)c);
+            vector_push(arg, (char)c);
         } while ((c = getchar()) != EOF && !isspace(c));
 
         if (c == EOF) {
@@ -80,8 +80,8 @@ cmd_scan()
             return cmd;
         }
 
-        vector_push(&arg, '\0');
-        vector_push(&cmd->args, arg);
+        vector_push(arg, '\0');
+        vector_push(cmd->args, arg);
 
         if (c == '\n')
             return cmd;
@@ -92,39 +92,26 @@ struct cmd *
 cmd_new()
 {
     struct cmd *cmd = cmd_scan();
-    int nargs = vector_nmemb(&cmd->args);
+    int nargs = vector_nmemb(cmd->args);
 
     if (cmd == NULL)
         return NULL;
 
     if (nargs > 0 && strcmp(cmd->args[nargs-1], "&") == 0) {
         cmd->bg = 1;
-        vector_free(&(cmd->args[nargs-1]));
-        vector_pop(&cmd->args);
+        vector_free(cmd->args[nargs-1]);
+        vector_pop(cmd->args);
     }
 
     return cmd;
 }
 
 void
-cmd_free(struct cmd *cmd)
-{
-    for (int i = 0; i < (int)vector_nmemb(&cmd->args); i++) {
-        char *vec = cmd->args[i];
-        vector_free(&vec);
-    }
-
-    vector_free(&(cmd->args));
-    vector_free(&(cmd->cmd));
-    free(cmd);
-}
-
-void
 vector_push_first(char ***vec, char *v)
 {
-    vector_push(vec, NULL);
+    vector_push(*vec, NULL);
 
-    for (int i = (int)vector_nmemb(vec)-1; i > 0; i--)
+    for (int i = (int)vector_nmemb(*vec)-1; i > 0; i--)
         (*vec)[i] = (*vec)[i-1];
 
     (*vec)[0] = v;
@@ -136,10 +123,11 @@ cmd_exec(struct cmd *cmd)
     int pid;
 
     vector_push_first(&cmd->args, cmd->cmd);
-    vector_push(&cmd->args, NULL);
+    vector_push(cmd->args, NULL);
 
     if ((pid = fork()) == 0) {
-        execv(cmd->cmd, cmd->args);
+        if (execv(cmd->cmd, cmd->args) == -1)
+            printf("can't open \"%s\"\n", cmd->cmd);
         exit(1);
     } else if (pid == -1) {
         exit(1);
@@ -164,7 +152,6 @@ main(void)
             break;
 
         cmd_exec(cmd);
-        cmd_free(cmd);
         cmd = NULL;
     }
 
