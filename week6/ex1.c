@@ -23,7 +23,7 @@ main(int argc, char *argv[])
 	}
 
 	write(pipefd[1], argv[1], strlen(argv[1]));
-	close(pipefd[1]);          /* Reader will see EOF */
+	close(pipefd[1]);
 
 	while (read(pipefd[0], &buf, 1) > 0)
 		write(STDOUT_FILENO, &buf, 1);

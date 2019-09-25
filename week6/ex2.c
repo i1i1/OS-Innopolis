@@ -28,8 +28,8 @@ main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	if (cpid == 0) {    /* Child reads from pipe */
-		close(pipefd[1]);          /* Close unused write end */
+	if (cpid == 0) {
+		close(pipefd[1]);
 
 		while (read(pipefd[0], &buf, 1) > 0)
 			write(STDOUT_FILENO, &buf, 1);
@@ -38,11 +38,11 @@ main(int argc, char *argv[])
 		close(pipefd[0]);
 		exit(EXIT_SUCCESS);
 
-	} else {            /* Parent writes argv[1] to pipe */
-		close(pipefd[0]);          /* Close unused read end */
+	} else {
+		close(pipefd[0]);
 		write(pipefd[1], argv[1], strlen(argv[1]));
-		close(pipefd[1]);          /* Reader will see EOF */
-		wait(NULL);                /* Wait for child */
+		close(pipefd[1]);
+		wait(NULL);
 		exit(EXIT_SUCCESS);
 	}
 }
