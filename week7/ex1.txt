@@ -1,0 +1,7 @@
+   text	   data	    bss	    dec	    hex	filename
+   2340	    656	     16	   3012	    bc4	../week6/ex1.o
+   2567	    672	     16	   3255	    cb7	../week6/ex2.o
+   1824	    616	      8	   2448	    990	../week6/ex3.o
+   2081	    616	      8	   2705	    a91	../week6/ex4.o
+   2101	    640	     16	   2757	    ac5	../week6/ex5.o
+   4073	    712	     16	   4801	   12c1	../week6/ex6.o
