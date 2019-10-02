@@ -23,6 +23,7 @@ xrealloc(void *bs, size_t sz, size_t oldsz)
 	}
 	void *ret = xmalloc(sz);
 	memcpy(ret, bs, (oldsz <= sz ? oldsz : sz));
+	free(bs);
 	return ret;
 }
 
