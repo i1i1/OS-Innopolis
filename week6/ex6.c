@@ -44,7 +44,7 @@ child1(int pipefd[2])
 
 	xprintf("Child1: reading pid of the second child\n");
 	close(pipefd[1]);
-	read(pipefd[0], &cpid, 1);
+	read(pipefd[0], &cpid, sizeof(cpid));
 	close(pipefd[0]);
 
 	xprintf("Child1: sleeping\n");
