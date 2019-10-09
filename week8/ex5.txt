@@ -1,0 +1,2 @@
+Physical address is the address within physical RAM, ie raw address. Virtual addresses is the abstraction which is
+handy for kernel developers because of security (process address space isolation).
