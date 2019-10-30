@@ -1,0 +1,1 @@
+Output is line buffered that's why we in first example Hello string will be buffered and will be printed after fork.
