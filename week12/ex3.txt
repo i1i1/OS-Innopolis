@@ -1,0 +1,23 @@
+look at ex3.sh for tests
+
+Without O_SYNC flag:
+
+DBUF_SIZE=500   : 0.021s
+DBUF_SIZE=1000  : 0.012s
+DBUF_SIZE=5000  : 0.006s
+DBUF_SIZE=10000 : 0.007s
+DBUF_SIZE=20000 : 0.005s
+DBUF_SIZE=40000 : 0.004s
+DBUF_SIZE=80000 : 0.004s
+
+With O_SYNC flag:
+
+DBUF_SIZE=500   : 16.341s
+DBUF_SIZE=1000  :  8.219s
+DBUF_SIZE=5000  :  1.677s
+DBUF_SIZE=10000 :  0.917s
+DBUF_SIZE=20000 :  0.472s
+DBUF_SIZE=40000 :  0.243s
+DBUF_SIZE=80000 :  0.131s
+
+Usage of O_SYNC drastically drops the performance, because we cant use parallel DMA anymore
